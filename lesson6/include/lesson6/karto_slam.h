@@ -92,6 +92,7 @@ private:
     std::string odom_frame_;
     std::string map_frame_;
     std::string base_frame_;
+    // ?
     int throttle_scans_;
     ros::Duration map_update_interval_;
     double resolution_;
