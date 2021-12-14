@@ -23,6 +23,7 @@ public:
 
 private:
   karto::ScanSolver::IdPoseVector mCorrections;
+  // 稀疏优化器
   g2o::SparseOptimizer mOptimizer;
 };
 

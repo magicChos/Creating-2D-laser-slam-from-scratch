@@ -57,8 +57,27 @@ public:
 
 private:
     void InitParams();
+
+    /**
+     * @brief Get the Odom Pose
+     * 
+     * @param karto_pose[out] 
+     * @param t[in] 
+     * @return true 
+     * @return false 
+     */
     bool getOdomPose(karto::Pose2 &karto_pose, const ros::Time &t);
     karto::LaserRangeFinder *getLaser(const sensor_msgs::LaserScan::ConstPtr &scan);
+    
+    /**
+     * @brief 
+     * 
+     * @param laser[out] 
+     * @param scan[in] 
+     * @param karto_pose[out] 
+     * @return true 
+     * @return false 
+     */
     bool addScan(karto::LaserRangeFinder *laser,
                  const sensor_msgs::LaserScan::ConstPtr &scan,
                  karto::Pose2 &karto_pose);
@@ -75,6 +94,7 @@ private:
 
     // ROS handles
     ros::NodeHandle node_;
+    // 定义监听器
     tf::TransformListener tf_;
     tf::TransformBroadcaster *tfB_;
 
@@ -117,6 +137,8 @@ private:
 
     bool use_back_end_;
     std::string solver_type_;
+
+    // 求解器对象指针
     karto::ScanSolver *solver_;
 };
 

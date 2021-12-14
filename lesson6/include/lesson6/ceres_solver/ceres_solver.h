@@ -47,48 +47,51 @@
 // The state for each vertex in the pose graph.
 struct Pose2d
 {
-  double x;
-  double y;
-  double yaw_radians;
+    double x;
+    double y;
+    double yaw_radians;
 };
 
 // The constraint between two vertices in the pose graph. The constraint is the
 // transformation from vertex id_begin to vertex id_end.
 struct Constraint2d
 {
-  int id_begin;
-  int id_end;
+    int id_begin;
+    int id_end;
 
-  double x;
-  double y;
-  double yaw_radians;
+    double x;
+    double y;
+    double yaw_radians;
 
-  // The inverse of the covariance matrix for the measurement. The order of the
-  // entries are x, y, and yaw.
-  Eigen::Matrix3d information;
+    // The inverse of the covariance matrix for the measurement. The order of the
+    // entries are x, y, and yaw.
+    // 测量协方差矩阵的逆矩阵
+    Eigen::Matrix3d information;
 };
 
 class CeresSolver : public karto::ScanSolver
 {
 public:
-  CeresSolver();
-  virtual ~CeresSolver();
+    CeresSolver();
+    virtual ~CeresSolver();
 
-  virtual void Clear();
-  virtual void Compute();
-  virtual const karto::ScanSolver::IdPoseVector &GetCorrections() const;
+    virtual void Clear();
+    virtual void Compute();
+    virtual const karto::ScanSolver::IdPoseVector &GetCorrections() const;
 
-  virtual void AddNode(karto::Vertex<karto::LocalizedRangeScan> *pVertex);
-  virtual void AddConstraint(karto::Edge<karto::LocalizedRangeScan> *pEdge);
+    virtual void AddNode(karto::Vertex<karto::LocalizedRangeScan> *pVertex);
+    virtual void AddConstraint(karto::Edge<karto::LocalizedRangeScan> *pEdge);
 
 private:
-  void BuildOptimizationProblem(const std::vector<Constraint2d> &constraints, std::map<int, Pose2d> *poses, ceres::Problem *problem);
-  bool SolveOptimizationProblem(ceres::Problem *problem);
+    void BuildOptimizationProblem(const std::vector<Constraint2d> &constraints, std::map<int, Pose2d> *poses, ceres::Problem *problem);
+    bool SolveOptimizationProblem(ceres::Problem *problem);
 
-  std::map<int, Pose2d> poses_;
-  std::vector<Constraint2d> constraints_;
+    // id:pose
+    std::map<int, Pose2d> poses_;
+    std::vector<Constraint2d> constraints_;
 
-  karto::ScanSolver::IdPoseVector corrections_;
+    // Vector of id-pose pairs
+    karto::ScanSolver::IdPoseVector corrections_;
 };
 
 #endif // LESSON6_CERES_SOLVER_H
