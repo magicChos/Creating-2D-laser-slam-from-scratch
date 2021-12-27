@@ -126,6 +126,7 @@ private:
     karto::Dataset *dataset_;
 
     std::map<std::string, karto::LaserRangeFinder *> lasers_;
+    // ?
     std::map<std::string, bool> lasers_inverted_;
 
     // Internal state

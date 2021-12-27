@@ -4975,7 +4975,7 @@ namespace karto
 
     /**
      * @brief LaserRangeScan 表示来自激光测距仪传感器的距离读数
-     * 
+     *
      */
     class LaserRangeScan : public SensorData
     {

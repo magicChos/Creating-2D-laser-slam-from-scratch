@@ -411,10 +411,11 @@ bool SlamKarto::addScan(karto::LaserRangeFinder *laser,
     if (!getOdomPose(karto_pose, scan->header.stamp))
         return false;
 
+    std::cout << "@test karto_pose: " << karto_pose.GetPosition() << std::endl;
+
     // Create a vector of doubles for karto
     // 倒着记录每个点的距离
     std::vector<kt_double> readings;
-
     if (lasers_inverted_[scan->header.frame_id])
     {
         for (std::vector<float>::const_reverse_iterator it = scan->ranges.rbegin();
@@ -441,6 +442,7 @@ bool SlamKarto::addScan(karto::LaserRangeFinder *laser,
     range_scan->SetCorrectedPose(karto_pose);
 
     // Add the localized range scan to the mapper
+    // 将局部范围扫描添加到mapper
     bool processed;
     if ((processed = mapper_->Process(range_scan)))
     {
