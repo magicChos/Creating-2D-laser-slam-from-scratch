@@ -355,7 +355,7 @@ void LidarUndistortion::CorrectLaserScan()
 
         // 畸变校正后的数据
         PointT &point_tmp = corrected_pointcloud_->points[i];
-
+        
         current_point_time = current_scan_time_start_ + i * current_scan_time_increment_;
 
         // 计算雷达数据的 x y 坐标

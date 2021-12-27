@@ -76,7 +76,8 @@ private:
 
     std_msgs::Header current_laserscan_header_;
     double current_scan_time_increment_;
-    // 当前lidar扫描的时间错
+
+    // 当前lidar扫描的开始时间戳
     double current_scan_time_start_;
     double current_scan_time_end_;
     double scan_count_;
@@ -95,7 +96,8 @@ private:
     nav_msgs::Odometry start_odom_msg_, end_odom_msg_;
     // 起始和终止odom时间戳
     double start_odom_time_, end_odom_time_;
-    // odom位移增量
+
+    // 两帧odom之间的位移增量
     float odom_incre_x_, odom_incre_y_, odom_incre_z_;
 
     std::chrono::steady_clock::time_point start_time_;
