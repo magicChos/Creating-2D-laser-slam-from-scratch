@@ -1929,6 +1929,7 @@ namespace karto
         MapperSensorManager *m_pMapperSensorManager;
 
         MapperGraph *m_pGraph;
+        // 定义优化器
         ScanSolver *m_pScanOptimizer;
 
         std::vector<MapperListener *> m_Listeners;

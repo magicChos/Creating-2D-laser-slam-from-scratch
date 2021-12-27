@@ -98,7 +98,7 @@ void OccupancyGrid::PublishMap()
                 map_.data[index] = 254;
         }
     }
-    
+
     // 设置这一帧地图数据的时间戳
     map_.header.stamp = ros::Time::now();
 
@@ -108,7 +108,8 @@ void OccupancyGrid::PublishMap()
 
     end_time_ = std::chrono::steady_clock::now();
     time_used_ = std::chrono::duration_cast<std::chrono::duration<double>>(end_time_ - start_time_);
-    std::cout << "发布一次地图用时: " << time_used_.count() << " 秒。\n" << std::endl;
+    std::cout << "发布一次地图用时: " << time_used_.count() << " 秒。\n"
+              << std::endl;
 }
 
 int main(int argc, char **argv)
