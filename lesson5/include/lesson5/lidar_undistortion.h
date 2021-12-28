@@ -113,12 +113,21 @@ private:
     /**
      * @brief 根据点云中某点的时间戳赋予其 通过插值 得到的旋转量
      * 
-     * @param pointTime 当前点云的时间戳
-     * @param rotXCur 
-     * @param rotYCur 
-     * @param rotZCur 
+     * @param pointTime[in] 当前点云的时间戳
+     * @param rotXCur[out] 
+     * @param rotYCur[out] 
+     * @param rotZCur[out] 
      */
     void ComputeRotation(double pointTime, float *rotXCur, float *rotYCur, float *rotZCur);
+
+    /**
+     * @brief 根据点云中某点的时间戳赋予其通过插值得到的平移量
+     * 
+     * @param pointTime[in] 
+     * @param posXCur[out] 
+     * @param posYCur[out] 
+     * @param posZCur[out] 
+     */
     void ComputePosition(double pointTime, float *posXCur, float *posYCur, float *posZCur);
     void PublishCorrectedPointCloud();
     void ResetParameters();

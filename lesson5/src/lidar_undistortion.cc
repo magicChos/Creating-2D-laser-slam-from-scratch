@@ -132,7 +132,7 @@ bool LidarUndistortion::CacheLaserScan(const sensor_msgs::LaserScan::ConstPtr &l
 
         // 雷达数据间的角度是固定的，因此可以将对应角度的cos与sin值缓存下来，不用每次都计算
         CreateAngleCache(laserScanMsg);
-
+        // 记录每帧激光中扫描点个数
         scan_count_ = laserScanMsg->ranges.size();
     }
 
@@ -275,6 +275,7 @@ bool LidarUndistortion::PruneOdomDeque()
         return false;
 
     // get start odometry at the beinning of the scan
+    // 记录在scan开始前的odom时间戳
     double current_odom_time;
 
     for (int i = 0; i < (int)odom_queue_.size(); i++)
@@ -324,7 +325,7 @@ bool LidarUndistortion::PruneOdomDeque()
         end_odom_msg_.pose.pose.position.z,
         roll, pitch, yaw);
 
-    // 求得这之间的变换
+    // 计算包围scan的两帧odom数据的相对变换
     Eigen::Affine3f transBt = transBegin.inverse() * transEnd;
 
     // 通过　transBt　获取　odomIncreX等，一帧点云数据时间的odom变化量
@@ -431,7 +432,6 @@ void LidarUndistortion::ComputeRotation(double pointTime, float *rotXCur, float 
     }
 }
 
-// 根据点云中某点的时间戳赋予其 通过插值 得到的平移量
 void LidarUndistortion::ComputePosition(double pointTime, float *posXCur, float *posYCur, float *posZCur)
 {
     *posXCur = 0;
