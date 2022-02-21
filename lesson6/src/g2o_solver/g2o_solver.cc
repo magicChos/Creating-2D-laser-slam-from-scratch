@@ -4,8 +4,8 @@
 #include "g2o/core/factory.h"
 #include "g2o/core/optimization_algorithm_factory.h"
 #include "g2o/core/optimization_algorithm_levenberg.h"
-#include "g2o/types/slam2d/types_slam2d.h"
 #include "g2o/solvers/csparse/linear_solver_csparse.h"
+#include "g2o/types/slam2d/types_slam2d.h"
 
 #include <ros/console.h>
 
@@ -19,7 +19,8 @@ G2oSolver::G2oSolver()
     linearSolver->setBlockOrdering(false);
     // 第2步：创建BlockSolver。并用上面定义的线性求解器初始化
     SlamBlockSolver *blockSolver = new SlamBlockSolver(linearSolver);
-    // 第3步：创建总求解器solver。并从GN, LM, DogLeg 中选一个，再用上述块求解器BlockSolver初始化
+    // 第3步：创建总求解器solver。并从GN, LM, DogLeg
+    // 中选一个，再用上述块求解器BlockSolver初始化
     g2o::OptimizationAlgorithmLevenberg *solver =
         new g2o::OptimizationAlgorithmLevenberg(blockSolver);
     // 第4步：创建稀疏优化器（SparseOptimizer）
@@ -43,7 +44,8 @@ void G2oSolver::AddNode(karto::Vertex<karto::LocalizedRangeScan> *pVertex)
 {
     karto::Pose2 odom = pVertex->GetObject()->GetCorrectedPose();
     g2o::VertexSE2 *poseVertex = new g2o::VertexSE2;
-    poseVertex->setEstimate(g2o::SE2(odom.GetX(), odom.GetY(), odom.GetHeading()));
+    poseVertex->setEstimate(
+        g2o::SE2(odom.GetX(), odom.GetY(), odom.GetHeading()));
     poseVertex->setId(pVertex->GetObject()->GetUniqueId());
     mOptimizer.addVertex(poseVertex);
     ROS_DEBUG("[g2o] Adding node %d.", pVertex->GetObject()->GetUniqueId());
@@ -123,7 +125,8 @@ void G2oSolver::Compute()
 
     // Write the result so it can be used by the mapper
     g2o::SparseOptimizer::VertexContainer nodes = mOptimizer.activeVertices();
-    for (g2o::SparseOptimizer::VertexContainer::const_iterator n = nodes.begin(); n != nodes.end(); n++)
+    for (g2o::SparseOptimizer::VertexContainer::const_iterator n = nodes.begin();
+         n != nodes.end(); n++)
     {
         double estimate[3];
         if ((*n)->getEstimateData(estimate))
@@ -148,7 +151,8 @@ const karto::ScanSolver::IdPoseVector &G2oSolver::GetCorrections() const
  * This function also identifies the loop closure edges and adds them to the
  * loop_closure_edges_ data for further processing
  */
-void G2oSolver::publishGraphVisualization(visualization_msgs::MarkerArray &marray)
+void G2oSolver::publishGraphVisualization(
+    visualization_msgs::MarkerArray &marray)
 {
     // Vertices are round, red spheres
     visualization_msgs::Marker m;
@@ -206,7 +210,8 @@ void G2oSolver::publishGraphVisualization(visualization_msgs::MarkerArray &marra
 
     std::set<int> vertex_ids;
     // HyperGraph Edges
-    for (g2o::SparseOptimizer::EdgeSet::iterator edge_it = mOptimizer.edges().begin();
+    for (g2o::SparseOptimizer::EdgeSet::iterator edge_it =
+             mOptimizer.edges().begin();
          edge_it != mOptimizer.edges().end(); ++edge_it)
     {
         // Is it a unary edge? Need to skip or else die a bad death
