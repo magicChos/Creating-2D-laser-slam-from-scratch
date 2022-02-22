@@ -45,8 +45,7 @@
 #include "open_karto/Mapper.h"
 
 // The state for each vertex in the pose graph.
-struct Pose2d
-{
+struct Pose2d {
     double x;
     double y;
     double yaw_radians;
@@ -54,8 +53,7 @@ struct Pose2d
 
 // The constraint between two vertices in the pose graph. The constraint is the
 // transformation from vertex id_begin to vertex id_end.
-struct Constraint2d
-{
+struct Constraint2d {
     int id_begin;
     int id_end;
 

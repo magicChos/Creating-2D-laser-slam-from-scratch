@@ -81,7 +81,7 @@ void CeresSolver::AddConstraint(karto::Edge<karto::LocalizedRangeScan> *pEdge)
     karto::LinkInfo *pLinkInfo = (karto::LinkInfo *)(pEdge->GetLabel());
 
     karto::Pose2 diff = pLinkInfo->GetPoseDifference();
-    
+
     karto::Matrix3 precisionMatrix = pLinkInfo->GetCovariance().Inverse();
     // 信息矩阵
     Eigen::Matrix<double, 3, 3> info;

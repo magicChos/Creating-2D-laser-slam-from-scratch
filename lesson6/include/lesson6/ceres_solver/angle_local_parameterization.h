@@ -39,18 +39,18 @@
 class AngleLocalParameterization
 {
 public:
-  template <typename T>
-  bool operator()(const T *theta_radians, const T *delta_theta_radians, T *theta_radians_plus_delta) const
-  {
-    *theta_radians_plus_delta = NormalizeAngle(*theta_radians + *delta_theta_radians);
+    template <typename T>
+    bool operator()(const T *theta_radians, const T *delta_theta_radians, T *theta_radians_plus_delta) const
+    {
+        *theta_radians_plus_delta = NormalizeAngle(*theta_radians + *delta_theta_radians);
 
-    return true;
-  }
+        return true;
+    }
 
-  static ceres::LocalParameterization *Create()
-  {
-    return (new ceres::AutoDiffLocalParameterization<AngleLocalParameterization, 1, 1>);
-  }
+    static ceres::LocalParameterization *Create()
+    {
+        return (new ceres::AutoDiffLocalParameterization<AngleLocalParameterization, 1, 1>);
+    }
 };
 
 #endif // LESSON6_CERES_SOLVER_ANGLE_LOCAL_PARAMETERIZATION_H
